@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import jdk.nashorn.internal.objects.annotations.Getter;
 
 import javax.swing.*;
 import java.util.concurrent.BrokenBarrierException;
@@ -21,7 +22,7 @@ import java.util.concurrent.locks.Lock;
 
 public class NettyServerIncreasePort {
 
-    private static Semaphore semaphore = new Semaphore(0);
+    public final static Semaphore semaphore = new Semaphore(0);
 
     public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -46,8 +47,6 @@ public class NettyServerIncreasePort {
                     }
                 });
         int[] port = {1000};
-
-
         port = bind(port, serverBootstrap);
         semaphore.acquire();
         System.out.println(port[0]);

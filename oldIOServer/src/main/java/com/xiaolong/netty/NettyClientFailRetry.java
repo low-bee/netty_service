@@ -27,7 +27,7 @@ public class NettyClientFailRetry {
         retryConnect(bootstrap, "127.0.0.1", 8000, 0);
     }
 
-    private static void retryConnect(Bootstrap bootstrap, String host, int port, int retry){
+    static void retryConnect(Bootstrap bootstrap, String host, int port, int retry){
         bootstrap.connect(host, port).addListener(future -> {
             if (future.isSuccess()){
                 System.out.println("连接成功！");
