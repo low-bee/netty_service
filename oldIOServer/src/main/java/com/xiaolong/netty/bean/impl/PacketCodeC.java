@@ -75,6 +75,7 @@ public class PacketCodeC {
      * @return 一个ByteBuf，封装有带有特定协议的对象
      */
     public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
+        byteBuf.retain();
         //2. 序列化packet对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
@@ -91,6 +92,7 @@ public class PacketCodeC {
         byteBuf.writeInt(bytes.length);
         // 写出对象
         byteBuf.writeBytes(bytes);
+        byteBuf.release();
         return byteBuf;
     }
 
@@ -141,6 +143,8 @@ public class PacketCodeC {
     private Class<? extends Packet> getRequestType(byte command) {
         if (LoginRequestPacket.LOGIN_REQUEST.equals(command)){
             return LoginRequestPacket.class;
+        } else if  (LoginRequestPacket.LOGIN_RESPONSE.equals(command)){
+            return LoginResponsePacket.class;
         }
         return null;
     }

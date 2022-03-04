@@ -2,11 +2,13 @@ package com.xiaolong.netty.bean.impl;
 
 import com.xiaolong.netty.bean.Command;
 import com.xiaolong.netty.bean.Packet;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginRequestPacket extends Packet implements Command {
 
     private Integer userId;
@@ -16,6 +18,9 @@ public class LoginRequestPacket extends Packet implements Command {
     @Override
     public Byte getCommand() {
         return LOGIN_REQUEST;
+    }
 
+    public static LoginRequestPacket getLoginPacket (Integer userId, String username, String password){
+        return LoginRequestPacket.builder().userId(userId).username(username).password(password).build();
     }
 }

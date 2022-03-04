@@ -1,6 +1,8 @@
 package com.xiaolong.netty.handler;
 
+import com.xiaolong.netty.bean.Packet;
 import com.xiaolong.netty.bean.impl.LoginRequestPacket;
+import com.xiaolong.netty.bean.impl.LoginResponsePacket;
 import com.xiaolong.netty.bean.impl.PacketCodeC;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,20 +14,39 @@ import java.util.Date;
 @Slf4j
 public class ClientLoginHandler extends ChannelInboundHandlerAdapter {
 
+    private LoginRequestPacket packet;
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info( "客户端开始登录");
         // 创建登录对象
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-        loginRequestPacket.setUserId(1);
-        loginRequestPacket.setUsername("test");
-        loginRequestPacket.setPassword("test");
+        packet = LoginRequestPacket.getLoginPacket(1, "test", "test");
 
         // 编码
-        ByteBuf buffer = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginRequestPacket);
+        ByteBuf buffer = PacketCodeC.INSTANCE.encode(ctx.alloc(), packet);
 
         ctx.channel().writeAndFlush(buffer);
         log.info("客户端发送账号密码.....");
         log.info("等待.....");
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+
+        log.info("接收到服务端消息！");
+        ByteBuf currMsg = (ByteBuf) msg;
+
+        Packet decode = PacketCodeC.INSTANCE.decode(currMsg);
+
+        if (decode instanceof LoginResponsePacket) {
+            LoginResponsePacket loginResponsePacket = (LoginResponsePacket) decode;
+
+            if (loginResponsePacket.isSuccess()){
+                log.info("用户{}登录成功", packet.getUsername());
+            } else {
+                log.info("用户{}登录失败，原因: {}", packet.getUsername(), loginResponsePacket.getReason());
+
+            }
+        }
     }
 }
