@@ -1,4 +1,4 @@
-package com.xiaolong.netty.bean.impl;
+package com.xiaolong.netty.packet;
 
 import com.xiaolong.netty.bean.Command;
 import com.xiaolong.netty.bean.Packet;

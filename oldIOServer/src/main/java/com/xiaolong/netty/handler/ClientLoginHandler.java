@@ -1,15 +1,15 @@
 package com.xiaolong.netty.handler;
 
 import com.xiaolong.netty.bean.Packet;
-import com.xiaolong.netty.bean.impl.LoginRequestPacket;
-import com.xiaolong.netty.bean.impl.LoginResponsePacket;
+import com.xiaolong.netty.packet.LoginRequestPacket;
+import com.xiaolong.netty.packet.LoginResponsePacket;
 import com.xiaolong.netty.bean.impl.PacketCodeC;
+import com.xiaolong.netty.packet.MessageResponsePacket;
+import com.xiaolong.netty.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Date;
 
 @Slf4j
 public class ClientLoginHandler extends ChannelInboundHandlerAdapter {
@@ -42,10 +42,16 @@ public class ClientLoginHandler extends ChannelInboundHandlerAdapter {
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) decode;
 
             if (loginResponsePacket.isSuccess()){
+                LoginUtil.markAsLogin(ctx.channel());
                 log.info("用户{}登录成功", packet.getUsername());
             } else {
                 log.info("用户{}登录失败，原因: {}", packet.getUsername(), loginResponsePacket.getReason());
 
+            }
+        } else if (decode instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) decode;
+            if (messageResponsePacket.getMessage() != null) {
+                log.info("收到服务端消息：{}", messageResponsePacket.getMessage());
             }
         }
     }
