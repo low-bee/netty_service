@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
 
     /**
      * Netty会做判断，只有packet是MessageRequestHandler才会执行channelRead0方法

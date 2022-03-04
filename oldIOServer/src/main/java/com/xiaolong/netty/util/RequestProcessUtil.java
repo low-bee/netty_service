@@ -18,7 +18,7 @@ public class RequestProcessUtil {
         MessageResponsePacket messageResponsePacket = MessageResponsePacket.builder()
                 .message("回复客户端消息 ["+ messageRequestPacket.getMessage()+"]...")
                 .build();
-        return PacketCodeC.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
+        return PacketCodeC.INSTANCE.encode(messageResponsePacket);
     }
 
     public static ByteBuf processLogin(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {
@@ -43,7 +43,10 @@ public class RequestProcessUtil {
         return PacketCodeC.INSTANCE.encode(ctx.alloc(), responsePacket);
     }
 
-    public static ByteBuf messageProcess(MessageRequestPacket msg){
-        return PacketCodeC.INSTANCE.encode(msg);
+    public static ByteBuf messageProcess(ChannelHandlerContext ctx, MessageResponsePacket messagerequestpacket) {
+        MessageResponsePacket messageResponsePacket = MessageResponsePacket.builder()
+                .message("回复客户端消息 ["+ messagerequestpacket.getMessage()+"]...")
+                .build();
+        return PacketCodeC.INSTANCE.encode(messageResponsePacket);
     }
 }
