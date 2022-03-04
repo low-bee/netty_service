@@ -48,8 +48,8 @@ public class PacketCodeC {
      * @return 一个ByteBuf，封装有带有特定协议的对象
      */
     public ByteBuf encode(ByteBufAllocator allocator, Packet packet) {
-        ByteBuf buffer = encode(allocator, packet, 1024, 2048);
-        return encode(buffer, packet);
+        ByteBuf byteBuf = allocator.ioBuffer();
+        return encode(byteBuf, packet);
     }
 
     /**
