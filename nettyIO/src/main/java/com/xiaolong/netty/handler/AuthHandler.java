@@ -1,10 +1,8 @@
 package com.xiaolong.netty.handler;
 
 import com.xiaolong.netty.util.LoginUtil;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.concurrent.EventExecutorGroup;
 
 /**
  * @Description: 登录消息验证器

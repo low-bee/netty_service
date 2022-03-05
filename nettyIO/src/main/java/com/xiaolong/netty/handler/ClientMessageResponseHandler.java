@@ -1,6 +1,5 @@
 package com.xiaolong.netty.handler;
 
-import com.xiaolong.netty.packet.Impl.LoginResponsePacket;
 import com.xiaolong.netty.packet.Impl.MessageResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

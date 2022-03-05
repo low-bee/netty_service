@@ -2,7 +2,6 @@ package com.xiaolong.netty.handler;
 
 import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
 import com.xiaolong.netty.util.RequestProcessUtil;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
