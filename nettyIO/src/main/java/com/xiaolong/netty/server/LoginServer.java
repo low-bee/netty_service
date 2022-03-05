@@ -1,6 +1,7 @@
 package com.xiaolong.netty.server;
 
 import com.xiaolong.netty.coder.PacketDecoder;
+import com.xiaolong.netty.coder.PacketDecoderEncoder;
 import com.xiaolong.netty.coder.PacketEncoder;
 import com.xiaolong.netty.handler.AuthHandler;
 import com.xiaolong.netty.handler.ServerLoginRequestHandler;
@@ -28,12 +29,12 @@ public class LoginServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new PacketDecoder()); // 解包器
+                        ch.pipeline().addLast(new PacketDecoderEncoder()); // 编码解码器
                         ch.pipeline().addLast(new ServerLoginRequestHandler()); // 登录请求器
                         ch.pipeline().addLast(new AuthHandler()); // 验证器
                         ch.pipeline().addLast(new ServerQueryInLineRequestHandler()); // 查询请求器
                         ch.pipeline().addLast(new ServerMessageRequestHandler()); // 服务消息处理器
-                        ch.pipeline().addLast(new PacketEncoder()); // 编码器
+
 
                     }
                 });

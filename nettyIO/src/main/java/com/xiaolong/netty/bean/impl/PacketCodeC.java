@@ -143,7 +143,6 @@ public class PacketCodeC {
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
-        System.out.println("当前commond" + command);
         if (Command.LOGIN_REQUEST.equals(command)){
             return LoginRequestPacket.class;
         } else if  (Command.LOGIN_RESPONSE.equals(command)){
