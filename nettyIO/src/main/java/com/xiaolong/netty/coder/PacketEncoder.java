@@ -9,6 +9,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Packet msg, ByteBuf out) {
+        System.out.println("客户端执行一次encode");
         PacketCodeC.INSTANCE.encode(out, msg);
     }
 }

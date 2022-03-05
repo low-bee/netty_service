@@ -4,6 +4,8 @@ import com.xiaolong.netty.coder.PacketDecoder;
 import com.xiaolong.netty.coder.PacketEncoder;
 import com.xiaolong.netty.handler.ClientLoginResponseHandler;
 import com.xiaolong.netty.handler.ClientMessageResponseHandler;
+import com.xiaolong.netty.handler.ClientQueryInLineResponseHandler;
+import com.xiaolong.netty.packet.Impl.InLineQueryRequestPacket;
 import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
 import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
 import com.xiaolong.netty.util.LoginUtil;
@@ -23,10 +25,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class LoginClient {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Random random = new Random();
+    private static Integer QUERY_NUM = 0;
 
     public static void main(String[] args) {
         Bootstrap bootstrap = new Bootstrap();
+        int id = 1;
+        startClient(bootstrap, id);
+    }
+
+    public static void startClient(Bootstrap bootstrap, int id) {
         EventLoopGroup work = new NioEventLoopGroup();
 
 
@@ -37,6 +44,7 @@ public class LoginClient {
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new ClientMessageResponseHandler());
+                        ch.pipeline().addLast(new ClientQueryInLineResponseHandler());
                         ch.pipeline().addLast(new ClientLoginResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
@@ -48,14 +56,12 @@ public class LoginClient {
                 log.info("连接成功！");
                 Channel channel = ((ChannelFuture) future).channel();
                 // 成功连接，开始进行消息发送
-                startConsoleThread(channel);
+                startConsoleThread(channel, id);
             }
         });
-
-
     }
 
-    private static void startConsoleThread(Channel channel) throws InterruptedException {
+    private static void startConsoleThread(Channel channel, int id) throws InterruptedException {
 
         new Thread(() -> {
             while (!Thread.interrupted()) {
@@ -69,15 +75,18 @@ public class LoginClient {
                     channel.writeAndFlush(LoginRequestPacket.builder()
                             .username(username)
                             .password(password)
-                            .userId(1)
+                            .userId(id)
                             .build());
-
                     waitForLoginResponse();
+                    channel.writeAndFlush(InLineQueryRequestPacket.builder().id(QUERY_NUM++).build());
                 } else {
                     String userid = scanner.nextLine();
                     String message = scanner.nextLine();
+
+                    channel.writeAndFlush(InLineQueryRequestPacket.builder().id(QUERY_NUM++).build());
                     channel.writeAndFlush(MessageRequestPacket.builder().toUserId(Integer.parseInt(userid)).message(message).build());
                 }
+
             }
         }, "client thread").start();
 

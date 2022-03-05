@@ -1,9 +1,11 @@
 package com.xiaolong.netty.handler;
 
+import com.xiaolong.netty.bean.Session;
 import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
+import com.xiaolong.netty.util.LoginUtil;
 import com.xiaolong.netty.util.RequestProcessUtil;
 import com.xiaolong.netty.util.SessionUtil;
-import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,12 @@ public class ServerLoginRequestHandler extends SimpleChannelInboundHandler<Login
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        SessionUtil.unBindSession(ctx.channel());
+
+        // 解除登录状态
+        Channel channel = ctx.channel();
+        Session session = SessionUtil.getSession(channel);
+        LoginUtil.loginOut(session.getUserId(), session.getUsername());
+        SessionUtil.unBindSession(channel);
+
     }
 }

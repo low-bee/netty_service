@@ -1,13 +1,10 @@
 package com.xiaolong.netty.bean.impl;
 
 import com.xiaolong.netty.bean.Command;
+import com.xiaolong.netty.packet.Impl.*;
 import com.xiaolong.netty.packet.Packet;
 import com.xiaolong.netty.bean.Serializer;
 import com.xiaolong.netty.bean.SerializerAlgorithm;
-import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
-import com.xiaolong.netty.packet.Impl.LoginResponsePacket;
-import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
-import com.xiaolong.netty.packet.Impl.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
@@ -146,6 +143,7 @@ public class PacketCodeC {
     }
 
     private Class<? extends Packet> getRequestType(byte command) {
+        System.out.println("当前commond" + command);
         if (Command.LOGIN_REQUEST.equals(command)){
             return LoginRequestPacket.class;
         } else if  (Command.LOGIN_RESPONSE.equals(command)){
@@ -154,6 +152,10 @@ public class PacketCodeC {
             return MessageRequestPacket.class;
         } else if (Command.MESSAGE_RESPONSE.equals(command)){
             return MessageResponsePacket.class;
+        } else if (Command.QUERY_IN_LINE.equals(command)){
+            return InLineQueryRequestPacket.class;
+        } else if  (Command.RESPONSE_IN_LINE.equals(command)){
+            return InLineQueryResponsePacket.class;
         }
         return null;
     }

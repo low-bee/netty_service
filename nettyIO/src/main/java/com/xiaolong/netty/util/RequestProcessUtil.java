@@ -35,6 +35,8 @@ public class RequestProcessUtil {
             return;
         }
         // 通过会话消息将消息构造出来
+        System.out.println(session.getUsername());
+
         MessageResponsePacket message = MessageResponsePacket.builder()
                 .message(messageRequestPacket.getMessage())
                 .fromUserName(session.getUsername())
@@ -68,8 +70,11 @@ public class RequestProcessUtil {
                 .username(loginRequestPacket.getUsername())
                 .password(loginRequestPacket.getPassword())
                 .build())) {
+
             // login success
             LoginUtil.markAsLogin(ctx.channel());
+            // 登录成功添加到对应的存储中
+            LoginUtil.loginSuccess(loginRequestPacket.getUserId(), loginRequestPacket.getUsername());
             log.info("登录成功！");
             responsePacket.setSuccess(true);
         } else {

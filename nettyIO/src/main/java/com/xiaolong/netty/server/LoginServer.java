@@ -5,6 +5,7 @@ import com.xiaolong.netty.coder.PacketEncoder;
 import com.xiaolong.netty.handler.AuthHandler;
 import com.xiaolong.netty.handler.ServerLoginRequestHandler;
 import com.xiaolong.netty.handler.ServerMessageRequestHandler;
+import com.xiaolong.netty.handler.ServerQueryInLineRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -27,11 +28,12 @@ public class LoginServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new PacketDecoder());
-                        ch.pipeline().addLast(new ServerLoginRequestHandler());
-                        ch.pipeline().addLast(new AuthHandler());
-                        ch.pipeline().addLast(new ServerMessageRequestHandler());
-                        ch.pipeline().addLast(new PacketEncoder());
+                        ch.pipeline().addLast(new PacketDecoder()); // 解包器
+                        ch.pipeline().addLast(new ServerLoginRequestHandler()); // 登录请求器
+                        ch.pipeline().addLast(new AuthHandler()); // 验证器
+                        ch.pipeline().addLast(new ServerQueryInLineRequestHandler()); // 查询请求器
+                        ch.pipeline().addLast(new ServerMessageRequestHandler()); // 服务消息处理器
+                        ch.pipeline().addLast(new PacketEncoder()); // 编码器
 
                     }
                 });

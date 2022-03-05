@@ -18,4 +18,14 @@ public interface Command {
      * 发送消息客户端响应指令
      */
     Byte MESSAGE_RESPONSE = 4;
+
+    /**
+     * 查询当前在线用户指令
+     */
+    Byte QUERY_IN_LINE = 5;
+
+    /**
+     * 响应在线查询请求指令
+     */
+    Byte RESPONSE_IN_LINE = 6;
 }
