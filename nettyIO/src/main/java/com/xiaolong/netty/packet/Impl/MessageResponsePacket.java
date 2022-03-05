@@ -1,7 +1,7 @@
-package com.xiaolong.netty.packet;
+package com.xiaolong.netty.packet.Impl;
 
 import com.xiaolong.netty.bean.Command;
-import com.xiaolong.netty.bean.Packet;
+import com.xiaolong.netty.packet.Packet;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -10,6 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageResponsePacket extends Packet implements Command {
+
+    private Integer fromUserId;
+
+    private String fromUserName;
 
     private String message;
 

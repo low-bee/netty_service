@@ -13,4 +13,9 @@ public interface Attributes {
      */
     AttributeKey<Boolean> LOGIN = AttributeKey.newInstance("login");
 
+    /**
+     * 带有用户ID的一个属性
+     */
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
+
 }

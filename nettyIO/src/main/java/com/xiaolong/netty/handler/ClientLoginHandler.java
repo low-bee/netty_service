@@ -1,10 +1,10 @@
 package com.xiaolong.netty.handler;
 
-import com.xiaolong.netty.bean.Packet;
+import com.xiaolong.netty.packet.Packet;
 import com.xiaolong.netty.bean.impl.PacketCodeC;
-import com.xiaolong.netty.packet.LoginRequestPacket;
-import com.xiaolong.netty.packet.LoginResponsePacket;
-import com.xiaolong.netty.packet.MessageResponsePacket;
+import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
+import com.xiaolong.netty.packet.Impl.LoginResponsePacket;
+import com.xiaolong.netty.packet.Impl.MessageResponsePacket;
 import com.xiaolong.netty.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

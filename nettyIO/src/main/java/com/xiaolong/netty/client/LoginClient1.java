@@ -1,5 +1,6 @@
 package com.xiaolong.netty.client;
 
+import com.xiaolong.netty.bean.impl.PacketCodeC;
 import com.xiaolong.netty.coder.PacketDecoder;
 import com.xiaolong.netty.coder.PacketEncoder;
 import com.xiaolong.netty.handler.ClientLoginResponseHandler;
@@ -8,6 +9,7 @@ import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
 import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
 import com.xiaolong.netty.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -21,7 +23,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class LoginClient {
+public class LoginClient1 {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
 
@@ -69,7 +71,7 @@ public class LoginClient {
                     channel.writeAndFlush(LoginRequestPacket.builder()
                             .username(username)
                             .password(password)
-                            .userId(1)
+                            .userId(2)
                             .build());
 
                     waitForLoginResponse();
@@ -88,7 +90,6 @@ public class LoginClient {
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
-            log.error("线程异常中断{}", Thread.currentThread().getName());
             e.printStackTrace();
         }
     }

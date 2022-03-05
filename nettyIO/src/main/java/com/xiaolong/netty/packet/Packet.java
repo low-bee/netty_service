@@ -1,4 +1,4 @@
-package com.xiaolong.netty.bean;
+package com.xiaolong.netty.packet;
 
 import lombok.Data;
 

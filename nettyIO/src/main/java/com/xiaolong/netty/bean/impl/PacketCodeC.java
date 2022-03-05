@@ -1,13 +1,13 @@
 package com.xiaolong.netty.bean.impl;
 
 import com.xiaolong.netty.bean.Command;
-import com.xiaolong.netty.bean.Packet;
+import com.xiaolong.netty.packet.Packet;
 import com.xiaolong.netty.bean.Serializer;
 import com.xiaolong.netty.bean.SerializerAlgorithm;
-import com.xiaolong.netty.packet.LoginRequestPacket;
-import com.xiaolong.netty.packet.LoginResponsePacket;
-import com.xiaolong.netty.packet.MessageRequestPacket;
-import com.xiaolong.netty.packet.MessageResponsePacket;
+import com.xiaolong.netty.packet.Impl.LoginRequestPacket;
+import com.xiaolong.netty.packet.Impl.LoginResponsePacket;
+import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
+import com.xiaolong.netty.packet.Impl.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 

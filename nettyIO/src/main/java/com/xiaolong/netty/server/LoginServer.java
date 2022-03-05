@@ -2,8 +2,9 @@ package com.xiaolong.netty.server;
 
 import com.xiaolong.netty.coder.PacketDecoder;
 import com.xiaolong.netty.coder.PacketEncoder;
-import com.xiaolong.netty.handler.LoginResponseHandler;
-import com.xiaolong.netty.handler.MessageResponseHandler;
+import com.xiaolong.netty.handler.AuthHandler;
+import com.xiaolong.netty.handler.ServerLoginRequestHandler;
+import com.xiaolong.netty.handler.ServerMessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -27,13 +28,14 @@ public class LoginServer {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline().addLast(new PacketDecoder());
-                        ch.pipeline().addLast(new LoginResponseHandler());
-                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new ServerLoginRequestHandler());
+                        ch.pipeline().addLast(new AuthHandler());
+                        ch.pipeline().addLast(new ServerMessageRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                     }
                 });
-        bootstrap.bind(8009);
+        bootstrap.bind(8000);
 
     }
 }

@@ -1,12 +1,12 @@
 package com.xiaolong.netty.handler;
 
-import com.xiaolong.netty.packet.MessageRequestPacket;
+import com.xiaolong.netty.packet.Impl.MessageRequestPacket;
 import com.xiaolong.netty.util.RequestProcessUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+public class ServerMessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
 
     /**
      * Netty会做判断，只有packet是MessageRequestHandler才会执行channelRead0方法
@@ -16,8 +16,7 @@ public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageR
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket msg) throws Exception {
-        ByteBuf byteBuf = RequestProcessUtil.messageProcess(ctx, msg);
-        ctx.channel().writeAndFlush(byteBuf);
+        RequestProcessUtil.messageProcess(ctx, msg);
     }
 
 

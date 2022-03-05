@@ -1,6 +1,6 @@
 package com.xiaolong.netty.coder;
 
-import com.xiaolong.netty.bean.Packet;
+import com.xiaolong.netty.packet.Packet;
 import com.xiaolong.netty.bean.impl.PacketCodeC;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
